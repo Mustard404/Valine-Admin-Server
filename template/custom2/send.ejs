@@ -1,103 +1,96 @@
 <head>
   <base target="_blank" />
   <style type="text/css">
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  </style>
-  <style id="cloudAttachStyle" type="text/css">
-    #divNeteaseBigAttach,
-    #divNeteaseBigAttach_bak {
-      display: none;
-    }
-  </style>
-  <style id="blockquoteStyle" type="text/css">
-    blockquote {
-      display: none;
-    }
-  </style>
-</head>
-
-<body tabindex="0" role="listitem">
-  <div id="content">
-    <div style="background: white;
+    #board {
+      background: white;
       width: 95%;
       max-width: 800px;
       margin: auto auto;
       border-radius: 5px;
-      border:orange 1px solid;
+      border: #FF779A 1px solid;
       overflow: hidden;
-      -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.18);">
-      <header style="overflow: hidden;">
-        <img style="width:100%;z-index: 666;" src="https://ae01.alicdn.com/kf/U5bb04af32be544c4b41206d9a42fcacfd.jpg" />
-      </header>
-      <div style="padding: 5px 20px;">
-        <p style="position: relative;
-        color: white;
-        float: left;
-        z-index: 999;
-        background: orange;
-        padding: 5px 30px;
-        margin: -25px auto 0 ;
-        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.30)">
-          Dear&nbsp;<%=pname%>
-        </p>
-        <br />
-        <center>
-          <h3>
-            来自<span style="text-decoration: none;color: orange "><%=name%></span>的回复
-          </h3>
-        </center>
-        <br />
-        &nbsp; &nbsp;
-        <p>
-          您在<a style="text-decoration: none;color: orange " target="_blank"
-            href="<%=url%>">&nbsp;<%=siteName%>&nbsp;</a>上曾发表的评论：
-        </p>
-        &nbsp; &nbsp;
-        <center>
-          <%-ptext%>
-        </center>
-        &nbsp; &nbsp;
-        <p style="
-        padding-bottom: 20px;
-    ">
-          <span style="color: orange;"><%=name%></span> 给您回复啦~~~：
-        </p>
-        <p>
-          <center
-            style="border-bottom:#ddd 1px solid;border-left:#ddd 1px solid;padding-bottom:20px;background-color:#eee;margin:15px 0px;padding-left:20px;padding-right:20px;border-top:#ddd 1px solid;border-right:#ddd 1px solid;padding-top:20px">
-            <%-text%>
-          </center>
-        </p>
-        <br />
-        <div style="text-align: center;margin-top: 40px;">
-          <img src="https://ae01.alicdn.com/kf/U0968ee80fd5c4f05a02bdda9709b041eE.png" alt="hr" style="width:100%;
-                                                                                                  margin:5px auto 5px auto;
-                                                                                                  display: block;" />
-          <a style="text-transform: uppercase;
-                      text-decoration: none;
-                      font-size: 14px;
-                      border: 2px solid #6c7575;
-                      color: #2f3333;
-                      padding: 10px;
-                      display: inline-block;
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  margin: 10px auto 0; " target="_blank"
-            href="<%=url%>"><%=siteName%>｜传送！Biu~</a>
-        </div>
-        &nbsp; &nbsp;
-        <p style="font-size: 12px;text-align: center;color: #999;" id="hitokoto">
-          欢迎常来做客哦！</p>
-        <p style="font-size: 12px;text-align: center;color: #999;">© 2020 <a style="text-decoration:none; color:orange"
-            href="<%=siteUrl%>"> <%=siteName%> </p>
-        </p>
+      -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, .12);
+      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, .18);
+    }
+
+    .text-center {
+      text-align: -webkit-center;
+      text-align: center;
+    }
+
+    .call {
+      position: relative;
+      color: white;
+      float: left;
+      z-index: 999;
+      background: #FF779A;
+      padding: 5px 30px;
+      margin: -25px auto 0;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.30)
+    }
+
+    .name {
+      text-decoration: none;
+      color: #FF779A !important;
+    }
+
+    .content {
+      padding-bottom: 20px;
+      background-color: #ff779a1f;
+      margin: 20px 0px;
+      padding: 20px;
+    }
+
+    .jump {
+      text-decoration: none;
+      font-size: 14px;
+      background: #FF779A;
+      color: #FFFFFF !important;
+      padding: 10px;
+      display: inline-block;
+      border-radius: 5px;
+      margin: 10px auto 0;
+    }
+
+    .end {
+      font-size: 12px;
+      text-align: center;
+      color: #999;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="board">
+    <img style="width:100%;" src="https://rmt.dogedoge.com/fetch/royce/storage/bg/signage.jpg?fmt=webp">
+
+    <div style="padding: 5px 20px;">
+
+      <div class="call">Dear&nbsp;<%=pname%></div><br>
+
+      <h3 class="text-center">来自 <span class="name"><%=name%></span> 的回复</h3><br>
+
+      <p>您在 <a class="name" target="_blank" href="<%=url%>">&nbsp;<%=siteName%>&nbsp;</a> 上曾发表评论：</p>
+      <div class="content text-center"><%-ptext%></div><br>
+
+      <p>收到了来自 <span class="name"><%=name%></span> 的回复：</p>
+      <div class="content text-center"><%-text%></div>
+
+      <div class="text-center">
+        <a class="jump" target="_blank" href="<%=url%>"><%=siteName%> | 传送门 Biu</a>
       </div>
+
+      <p class="end">
+        欢迎常来做客哦！<br>
+        © 2020 <a class="name" href="<%=siteUrl%>"> <%=siteName%> </a>
+      </p>
+
     </div>
+
   </div>
 
   <script>
-    var _c = document.getElementById("content");
+    var _c = document.getElementById("board");
     _c.innerHTML = (_c.innerHTML || "")
       .replace(/(href|formAction|onclick|javascript)/gi, "__$1")
       .replace(/<\/?marquee>/gi, "");
@@ -112,67 +105,5 @@
     }
     xhr.send();
   </script>
-  <style type="text/css">
-    body {
-      font-size: 14px;
-      font-family: arial, verdana, sans-serif;
-      line-height: 1.666;
-      padding: 0;
-      margin: 0;
-      overflow: auto;
-      white-space: normal;
-      word-wrap: break-word;
-      min-height: 100px;
-    }
 
-    td,
-    input,
-    button,
-    select,
-    body {
-      font-family: Helvetica, "Microsoft Yahei", verdana;
-    }
-
-    pre {
-      white-space: pre-wrap;
-      white-space: -moz-pre-wrap;
-      white-space: -pre-wrap;
-      white-space: -o-pre-wrap;
-      word-wrap: break-word;
-      width: 95%;
-    }
-
-    th,
-    td {
-      font-family: arial, verdana, sans-serif;
-      line-height: 1.666;
-    }
-
-    img {
-      border: 0;
-    }
-
-    header,
-    footer,
-    section,
-    aside,
-    article,
-    nav,
-    hgroup,
-    figure,
-    figcaption {
-      display: block;
-    }
-
-    blockquote {
-      margin-right: 0px;
-    }
-  </style>
-
-  <style id="ntes_link_color" type="text/css">
-    a,
-    td a {
-      color: #236da1;
-    }
-  </style>
 </body>
