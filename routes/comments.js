@@ -3,29 +3,32 @@ const router = require("express").Router();
 const AV = require("leanengine");
 const mail = require("../utilities/send-mail");
 const spam = require("../utilities/check-spam");
-
+const moment = require("moment");
 const Comment = AV.Object.extend("Comment");
 
 // Comment 列表
-router.get("/", function(req, res, next) {
+router.get("/", function (req, res, next) {
   if (req.currentUser) {
-    let query = new AV.Query(Comment);
+    console.log("成功登录了后台！", new Date());
+    const query = new AV.Query(Comment);
     query.descending("createdAt");
     query.limit(50);
     query
       .find()
       .then(
-        function(results) {
+        function (results) {
           res.render("comments", {
             title: process.env.SITE_NAME + "上的评论",
-            comment_list: results
+            comment_list: results,
+            moment: moment,
+            zone: String(process.env.LEANCLOUD_REGION),
           });
         },
-        function(err) {
+        function (err) {
           if (err.code === 101) {
             res.render("comments", {
               title: process.env.SITE_NAME + "上的评论",
-              comment_list: []
+              comment_list: [],
             });
           } else {
             next(err);
@@ -34,29 +37,30 @@ router.get("/", function(req, res, next) {
       )
       .catch(next);
   } else {
+    console.log("有用户成功找到了后台地址！", new Date());
     res.redirect("/");
   }
 });
 
-router.get("/resend-email", function(req, res, next) {
+router.get("/resend-email", function (req, res, next) {
   if (req.currentUser) {
-    let query = new AV.Query(Comment);
+    const query = new AV.Query(Comment);
     query
       .get(req.query.id)
       .then(
-        function(object) {
+        function (object) {
           query
             .get(object.get("rid"))
             .then(
-              function(parent) {
+              function (parent) {
                 mail.send(object, parent);
                 res.redirect("/comments");
               },
-              function(err) {}
+              function (err) {}
             )
             .catch(next);
         },
-        function(err) {}
+        function (err) {}
       )
       .catch(next);
   } else {
@@ -64,17 +68,17 @@ router.get("/resend-email", function(req, res, next) {
   }
 });
 
-router.get("/delete", function(req, res, next) {
+router.get("/delete", function (req, res, next) {
   if (req.currentUser) {
-    let query = new AV.Query(Comment);
+    const query = new AV.Query(Comment);
     query
       .get(req.query.id)
       .then(
-        function(object) {
+        function (object) {
           object.destroy();
           res.redirect("/comments");
         },
-        function(err) {}
+        function (err) {}
       )
       .catch(next);
   } else {
@@ -82,40 +86,40 @@ router.get("/delete", function(req, res, next) {
   }
 });
 
-router.get("/not-spam", function(req, res, next) {
+router.get("/not-spam", function (req, res, next) {
   if (req.currentUser) {
-    let query = new AV.Query(Comment);
+    const query = new AV.Query(Comment);
     query
       .get(req.query.id)
       .then(
-        function(object) {
+        function (object) {
           object.set("isSpam", false);
           object.set("ACL", { "*": { read: true } });
           object.save();
           spam.submitHam(object);
           res.redirect("/comments");
         },
-        function(err) {}
+        function (err) {}
       )
       .catch(next);
   } else {
     res.redirect("/");
   }
 });
-router.get("/mark-spam", function(req, res, next) {
+router.get("/mark-spam", function (req, res, next) {
   if (req.currentUser) {
-    let query = new AV.Query(Comment);
+    const query = new AV.Query(Comment);
     query
       .get(req.query.id)
       .then(
-        function(object) {
+        function (object) {
           object.set("isSpam", true);
           object.set("ACL", { "*": { read: false } });
           object.save();
           spam.submitSpam(object);
           res.redirect("/comments");
         },
-        function(err) {}
+        function (err) {}
       )
       .catch(next);
   } else {
